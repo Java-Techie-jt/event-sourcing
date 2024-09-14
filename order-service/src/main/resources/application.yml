@@ -1,0 +1,27 @@
+spring:
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: javatechie
+
+
+  kafka:
+    bootstrap-servers: localhost:9092   # Kafka broker addresses
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer    # Serializer for the key
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer  # Serializer for the value (event)
+      acks: all  # Ensure all replicas acknowledge the message
+      retries: 3 # Number of retries in case of a failure
+      batch-size: 16384   # Batch size in bytes
+      linger-ms: 1        # Time to wait before sending a batch
+      buffer-memory: 33554432 # Buffer size in memory
+    properties:
+      security.protocol: PLAINTEXT  # Define the security protocol (PLAINTEXT or SSL)
+    template:
+      default-topic: order-events   # Default topic for producer
+
+
+order:
+  event:
+    topicName: order-events
